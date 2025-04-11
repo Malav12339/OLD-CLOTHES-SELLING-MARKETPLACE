@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OldZ - Products</title>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+</head>
+<body>
+    <h1>Products</h1>
+    <div id="productList"></div>
+    <script>
+        async function fetchProducts() {
+            try {
+                const response = await fetch('http://localhost:5000/products', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}` 
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch products');
+                }
+                const products = await response.json();
+                const productList = document.getElementById('productList');
+                productList.innerHTML = products.map(product => `
+                    <div>
+                        <h3>${product.title}</h3>
+                        <p>${product.description}</p>
+                        <p>Price: $${product.price}</p>
+                        <p>Condition: ${product.condition}</p>
+                        <button onclick="addToWishlist('${product._id}')">Add to Wishlist</button>
+                    </div>
+                `).join('');
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        }
+
+        async function addToWishlist(productId) {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Please login to add to wishlist');
+                return;
+            }
+
+            try {
+                const userId = jwt_decode(token).userId;
+                const response = await fetch(`http://localhost:5000/wishlist/${productId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ userId })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to add to wishlist');
+                }
+
+                const result = await response.json();
+                alert(result.message);
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        }
+
+        fetchProducts();
+    </script>
+</body>
+</html>

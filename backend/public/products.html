@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OldZ - Products</title>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode@3.1.2/build/jwt-decode.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        #productList {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .product {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 250px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            border-radius: 3px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Products</h1>
+    <div id="productList"></div>
+    <script>
+        async function fetchProducts() {
+            try {
+                const response = await fetch('http://localhost:5000/products', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${localStorage.getItem('token')}` 
+                    }
+                });
+                if (!response.ok) {
+                    throw new Error('Failed to fetch products');
+                }
+                const products = await response.json();
+                const productList = document.getElementById('productList');
+                productList.innerHTML = products.map(product => `
+                    <div class="product">
+                        <h3>${product.title}</h3>
+                        <p>${product.description}</p>
+                        <p><strong>Price:</strong> $${product.price}</p>
+                        <p><strong>Condition:</strong> ${product.condition}</p>
+                        <button onclick="addToWishlist('${product._id}')">Add to Wishlist</button>
+                    </div>
+                `).join('');
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        }
+
+        async function addToWishlist(productId) {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                alert('Please login to add to wishlist');
+                return;
+            }
+
+            try {
+                const userId = jwt_decode(token).userId;
+                const response = await fetch(`http://localhost:5000/wishlist/${productId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ userId })
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to add to wishlist');
+                }
+
+                const result = await response.json();
+                alert(result.message);
+            } catch (error) {
+                alert(`Error: ${error.message}`);
+            }
+        }
+
+        fetchProducts();
+    </script>
+</body>
+</html>

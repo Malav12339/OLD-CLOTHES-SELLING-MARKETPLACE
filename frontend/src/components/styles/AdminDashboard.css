@@ -1,0 +1,270 @@
+/* AdminDashboard.css */
+
+.admin-dashboard-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid #dee2e6;
+  }
+  
+  .admin-header h1 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 28px;
+    color: #343a40;
+    margin: 0;
+  }
+  
+  .admin-header .icon {
+    color: #fd7e14;
+  }
+  
+  .admin-actions {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .refresh-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #f8f9fa;
+    color: #495057;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .refresh-btn:hover {
+    background-color: #e9ecef;
+  }
+  
+  .dashboard-controls {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  .filter-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+  }
+  
+  .filter-controls label {
+    margin-bottom: 0;
+    font-weight: 500;
+  }
+  
+  .filter-controls select {
+    width: 200px;
+  }
+  
+  .reports-table-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+  }
+  
+  .table {
+    margin-bottom: 0;
+  }
+  
+  .table thead {
+    background-color: #f8f9fa;
+  }
+  
+  .table th {
+    border-top: none;
+    border-bottom-width: 1px;
+    font-weight: 600;
+    color: #495057;
+    padding: 16px;
+  }
+  
+  .table td {
+    padding: 16px;
+    vertical-align: middle;
+  }
+  
+  .user-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .user-name {
+    font-weight: 500;
+  }
+  
+  .user-email {
+    font-size: 14px;
+    color: #6c757d;
+  }
+  
+  .report-type {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    width: fit-content;
+  }
+  
+  .product-type {
+    background-color: #e3f2fd;
+    color: #0d6efd;
+  }
+  
+  .seller-type {
+    background-color: #fff3cd;
+    color: #856404;
+  }
+  
+  .report-reason {
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .report-reason:hover {
+    white-space: normal;
+    overflow: visible;
+    position: relative;
+    z-index: 1;
+    background-color: #f8f9fa;
+    border-radius: 4px;
+    padding: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+  }
+  
+  .action-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  
+  .no-actions {
+    color: #adb5bd;
+    font-style: italic;
+    font-size: 14px;
+  }
+  
+  .loading-container,
+  .error-container,
+  .no-reports-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 0;
+    text-align: center;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  }
+  
+  .loading-container p,
+  .error-container p,
+  .no-reports-container p {
+    margin-top: 16px;
+    color: #6c757d;
+  }
+  
+  .error-container h3 {
+    color: #dc3545;
+    margin-top: 16px;
+  }
+  
+  .error-container button {
+    margin-top: 16px;
+  }
+  
+  /* Modal styles */
+  .modal-body .product-details,
+  .modal-body .seller-details {
+    background-color: #f8f9fa;
+    padding: 12px;
+    border-radius: 4px;
+    margin-top: 10px;
+  }
+  
+  .modal-body .report-details {
+    margin-top: 16px;
+  }
+  
+  .modal-body .report-details p {
+    background-color: #f8f9fa;
+    padding: 12px;
+    border-radius: 4px;
+    margin-top: 8px;
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 992px) {
+    .admin-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    
+    .admin-actions {
+      width: 100%;
+    }
+    
+    .refresh-btn {
+      flex: 1;
+      justify-content: center;
+    }
+    
+    .filter-controls {
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+    
+    .table-responsive {
+      margin-bottom: 0;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .dashboard-controls {
+      flex-direction: column;
+      gap: 15px;
+    }
+    
+    .filter-controls {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .filter-controls select {
+      width: 100%;
+    }
+    
+    .action-buttons {
+      flex-direction: column;
+      width: 100%;
+    }
+    
+    .action-buttons .btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
